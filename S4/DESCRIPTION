@@ -1,0 +1,13 @@
+Package: S4
+Version: 0.1-0
+Date: 2016-11-01
+Title: Assign Properties to TNBC Patients
+Author: Sadiq Saleh [aut, cre]
+Authors@R: c(person("Sadiq", "Saleh", email = "sadiq.mehdiismailsaleh@mail.mcgill.ca", role = c("aut", "cre")),
+            person("Michael", "Hallett", email = "michael.t.hallett@mcgill.ca ", role = "aut"))
+Maintainer: Sadiq Saleh <sadiq.mehdiismailsaleh@mail.mcgill.ca>
+Description: Assigns the TNBC stromal properties and TNBCType generative properties to gene expression datasets.
+Depends: R (>= 3.2.0)
+License: GPL
+LazyData: true
+RoxygenNote: 5.0.1
