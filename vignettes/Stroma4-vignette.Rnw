@@ -1,0 +1,95 @@
+%\VignetteIndexEntry{Using the Stroma4 package}
+%\VignetteDepends{breastCancerMAINZ}
+
+\documentclass[a4paper]{article}
+
+\title{Using the Stroma4 package}
+\author{Sadiq MI Saleh, Michael T Hallett}
+
+\SweaveOpts{echo=TRUE, print=FALSE, RESULTS=FALSE}
+\usepackage{a4wide}
+
+\begin{document}
+
+\maketitle
+%----------------------------------------------------------
+\section{Introduction}
+%----------------------------------------------------------
+This package assigns the stroma and Lehmann properties to a set of samples. While they were identified in TNBC stromal samples, these properties are applicable outside of this context.
+
+%----------------------------------------------------------
+\section{Analysis of sample dataset}
+%----------------------------------------------------------
+
+To apply the stromal properties, simply use pass an `ExpressionSet` to the function "assign.properties"
+\newline
+\newline
+First we will load the Stroma4 package.
+<<verbose=FALSE, results=hide>>=
+source("https://bioconductor.org/biocLite.R")
+#biocLite("Stroma4")
+library("Stroma4")
+@
+
+
+Next we load a test dataset to serve as an example. We use the gene expression dataset published by Schmidt et al. [2008] provided in the breastCancerMAINZ package.
+<<verbose=FALSE, results=hide>>=
+library(breastCancerMAINZ)
+data(mainz, package='breastCancerMAINZ')
+@
+
+\bigskip
+\noindent
+3 types of analyses can then be run:
+
+%----------------------------------------------------------
+\subsection{Assignment of stromal properties alone}
+%----------------------------------------------------------
+<<>>=
+just.stromal.properties <- assign.properties(ESet=mainz, geneID.column="Gene.symbol",
+                          genelists="Stroma4", n=10, mc.cores=1)
+@
+
+%----------------------------------------------------------
+\subsection{Assignment of Lehmann properties alone}
+%----------------------------------------------------------
+
+<<>>=
+just.lehmann.properties <- assign.properties(ESet=mainz, geneID.column="Gene.symbol",
+                          genelists="TNBCType", n=10, mc.cores=1)
+@
+
+%----------------------------------------------------------
+\subsection{Assignment of both stromal and Lehmann properties simultaneously}
+%----------------------------------------------------------
+
+<<>>=
+all.properties <- assign.properties(ESet=mainz, geneID.column="Gene.symbol",
+                genelists=c("Stroma4", "TNBCType"), n=10, mc.cores=1)
+@
+
+%----------------------------------------------------------
+\subsection{Expected result from assinging properties}
+%----------------------------------------------------------
+
+The function returns a list of assignments for each property. Assignments are from 1-3, with 1 being low, 2 being intermediate, and 3 being high assignment respectively.
+<<>>=
+print(lapply(all.properties, table))
+@
+
+%----------------------------------------------------------
+\section{Notes:}
+%----------------------------------------------------------
+
+%----------------------------------------------------------
+\subsection{Confidence of intermediate region}
+%----------------------------------------------------------
+By increasing the number or random samples (n), the confidence in the intermediate region is increased at the expense of increased computing time
+
+%----------------------------------------------------------
+\subsection{Using multiple cores}
+%----------------------------------------------------------
+
+2. Using multiple cores (mc.cores) on machines with multiple cores available can reduce runtime. The function detectCores() can be used to determine how many cores you have available.
+
+\end{document}

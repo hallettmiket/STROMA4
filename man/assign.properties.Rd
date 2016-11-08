@@ -4,23 +4,35 @@
 \alias{assign.properties}
 \title{Function to assign properties to an expression matrix}
 \usage{
-assign.properties(exprs, genes, genelists = c("S4", "TNBCType"), n = 1000,
-  seed = 123456, mc.cores = 1)
+assign.properties(ESet, geneID.column = 1, genelists = c("Stroma4",
+  "TNBCType"), n = 1000, seed = 123456, mc.cores = 1,
+  var.method = function(x) rowIQRs(x, na.rm = TRUE))
 }
 \arguments{
-\item{exprs}{An expression matrix. Rows correspont to genes, columns to samples. Genes with multiple probes should be collapsed to a single row e.g. using most variable probe.}
+\item{ESet}{An ExpressionSet object. Rows correspond to genes, columns to samples. If there are genes with multiple probes, they will be collapsed to a single row using the function defined in var.method.}
 
-\item{genes}{A vector with gene symbols for exprs. Should be the same length as the number of rows in exprs.}
+\item{geneID.column}{Integer or column name corresponding to column in featureData table corresponding to HGNC ID.}
 
-\item{genelists}{A vector with either S4, TNBCType, or both to specify which genelists to use.}
+\item{genelists}{A vector with either Stroma4, TNBCType, or both to specify which genelists to use.}
 
 \item{n}{An integer value specifying the number of random samples to generate.}
 
-\item{seed}{An integer value specifying a seed for the random ranks function. Defauly value is 123456.}
+\item{seed}{An integer value specifying a seed for the random ranks function. Default value is 123456.}
 
 \item{mc.cores}{An integer specifying how many cores to use. Default value is 1.}
+
+\item{var.method}{Function for assessing variance to collapse probes. Default is IQR}
+}
+\value{
+The function returns a list of assignments for each property. Assignments are from 1-3, with 1 being low, 2 being intermediate, and 3 being high assignment respectively.
 }
 \description{
 This is a function to assign stromal property and TNBCType generative property levels to a TNBC dataset
+}
+\examples{
+library(breastCancerMAINZ)
+data(mainz, package='breastCancerMAINZ')
+all.properties <- assign.properties(ESet=mainz, geneID.column='Gene.symbol',
+	genelists=c('Stroma4', 'TNBCType'), n=10, mc.cores=1)
 }
 

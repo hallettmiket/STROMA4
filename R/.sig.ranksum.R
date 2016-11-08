@@ -6,9 +6,8 @@
 #' @param dn A vector specifying rows of genes in the down direction.
 #' @param ns A vector specifying rows of genes with an unspecified direction. These will be split using the pam function from the cluster package.
 #' @param full.return A boolean specifying if the full result should be returned (T) or only the ranksum values (F).
+#' @export
 #' @import cluster
-#' @importFrom matrixStats rowSds
-#' @importFrom stats cor
 #' @importFrom matrixStats rowSds
 .sig.ranksum <- function(exprdata, up=NULL, dn=NULL, ns=NULL, full.return = FALSE)
 {

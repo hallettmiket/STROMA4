@@ -1,5 +1,5 @@
 Package: Stroma4
-Version: 0.1-0
+Version: 0.99.0
 Date: 2016-11-01
 Title: Assign Properties to TNBC Patients
 Author: Sadiq Saleh [aut, cre]
@@ -7,7 +7,8 @@ Authors@R: c(person("Sadiq", "Saleh", email = "sadiq.mehdiismailsaleh@mail.mcgil
             person("Michael", "Hallett", email = "michael.t.hallett@mcgill.ca ", role = "aut"))
 Maintainer: Sadiq Saleh <sadiq.mehdiismailsaleh@mail.mcgill.ca>
 Description: Assigns the TNBC stromal properties and TNBCType generative properties to gene expression datasets.
-Depends: R (>= 3.2.0)
+Depends: R (>= 3.2.0), Biobase, parallel, cluster, matrixStats, stats, graphics, utils
 License: GPL
 LazyData: true
 RoxygenNote: 5.0.1
+Suggests: breastCancerMAINZ

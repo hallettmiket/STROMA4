@@ -6,10 +6,8 @@
 #' @param seed Seed to generate random data (for reproducibility).
 #' @param mc.cores An integer specifying how many cores to use.
 #' @param renice A boolean to specify if the child processes should be reniced to the lowest nice priority.
+#' @export
 #' @import parallel
-#' @importFrom stats runif
-#' @importFrom utils tail
-#' @importFrom graphics hist
 .random.ranks <- function(bs, n=1000, seed=123456, mc.cores=2, renice=T)
 {
     datrank.up <- datrank.dn <- NULL
