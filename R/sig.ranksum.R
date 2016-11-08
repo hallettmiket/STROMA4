@@ -46,7 +46,7 @@
 	if (length(ns) > 0)
 	{
 		## identify rows in exprdata that have zero variance
-		row.sds <- rowSds(exprdata[ns,,drop=F], na.rm=TRUE)
+		row.sds <- rowSds(exprdata[ns,,drop=FALSE], na.rm=TRUE)
 		tmp <- row.sds == 0 | is.na(row.sds)
 		zero.sd.idx <- ns[tmp]
 		ns <- ns[!tmp]
@@ -78,7 +78,7 @@
 			up <- ns[which(clustering == up.cluster)]
 			dn <- ns[which(clustering != up.cluster)]
 			up.dn.cor <- cor(t(exprdata[up, , drop=FALSE]), t(exprdata[dn, , drop=FALSE]), use="pairwise")
-			if (sum(up.dn.cor < 0,na.rm=T) < length(up) * length(dn) / 2)
+			if (sum(up.dn.cor < 0,na.rm=TRUE) < length(up) * length(dn) / 2)
 			{
 				up <- ns
 				dn <- NULL

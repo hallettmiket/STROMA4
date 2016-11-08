@@ -29,7 +29,7 @@ assign.properties <- function(ESet, geneID.column=1, genelists=c('Stroma4', 'TNB
     if(any(duplicated(genes))){
         cat('--There are duplicated genes. Using most variable to collapse--', '\n')
         cat()
-        var.estimate <- order(var.method(exprs), decreasing=T)
+        var.estimate <- order(var.method(exprs), decreasing=TRUE)
         exprs <- exprs[var.estimate, ]
         genes <- genes[var.estimate]
 
@@ -66,7 +66,7 @@ assign.properties <- function(ESet, geneID.column=1, genelists=c('Stroma4', 'TNB
     for(i in names(temp.envir)){
         ## Find Matching genes between data and property genelist
         match.genes <- temp.envir[[i]]
-        match.genes <- match.genes[which(match.genes[, 1] %in% genes), , drop=F]
+        match.genes <- match.genes[which(match.genes[, 1] %in% genes), , drop=FALSE]
 
         if(nrow(match.genes) == 0){
             ret[[i]] <- "Error: No matching genes in expression matrix"
@@ -78,7 +78,7 @@ assign.properties <- function(ESet, geneID.column=1, genelists=c('Stroma4', 'TNB
             match.exprs <- exprs[c(up.genes, dn.genes), ]
             directions <- rep(c('up', 'down'), c(length(up.genes), length(dn.genes)))
 
-            ranksum.object <- .sig.ranksum(exprdata=match.exprs, up=which(directions == 'up'), dn=which(directions == 'down'), full.return=T)
+            ranksum.object <- .sig.ranksum(exprdata=match.exprs, up=which(directions == 'up'), dn=which(directions == 'down'), full.return=TRUE)
 
             roi <- .random.ranks(ranksum.object, n=n, seed=seed, mc.cores=mc.cores)
 

@@ -10,7 +10,7 @@
 #' @importFrom stats runif
 #' @importFrom utils tail
 #' @importFrom graphics hist
-.random.ranks <- function(bs, n=1000, seed=123456, mc.cores=2, renice=T)
+.random.ranks <- function(bs, n=1000, seed=123456, mc.cores=2, renice=TRUE)
 {
     datrank.up <- datrank.dn <- NULL
     if(any(bs$up.dn > 0))
@@ -25,19 +25,9 @@
     set.seed(seed)
     random.cols <- t(sapply(1:nrow(datrank), function(i) {runif(n, 0, nvals.rows[i] + 1)}))
 
-#    rand.dist <- unlist(mclapply(1:n, function(i) {
-#	if(renice==T)  ### Renice child processes so parent does not need to be reniced
-#		system(paste('renice', 19, Sys.getpid()), ignore.stdout=T)
-#
-#       datrank.rand.col <- cbind(datrank, random.cols[, i])
-#        datrank.rand.col <- t(apply(datrank.rand.col, 1, function(x) {rank(x, "average", na.last="keep")}))
-#        ranksums <- colSums(datrank.rand.col, na.rm=TRUE) / nvals.cols
-#        tail(rank(ranksums, "average", na.last=TRUE), 1)
-#    }, mc.cores=mc.cores)) - 1
-
     cl.rr <- makeCluster(mc.cores)
-    if(renice==T)  ### Renice child processes so parent does not need to be re-niced
-        temp <- clusterCall(cl.rr, function(x) system(paste('renice', 19, Sys.getpid()), ignore.stdout=T))
+    if(renice==TRUE)  ### Renice child processes so parent does not need to be re-niced
+        temp <- clusterCall(cl.rr, function(x) system(paste('renice', 19, Sys.getpid()), ignore.stdout=TRUE))
 
     clusterExport(cl.rr, c("datrank", "nvals.cols"), envir=environment())
 
