@@ -1,16 +1,16 @@
-#' \name{MSL.property}
-#' \alias{MSL.property}
-#' \docType{data}
-#' \title {Genelist for MSL.property}
+#' @name MSL.property
+#' @docType data
+#' @title Genelist for MSL.property
 #' 
-#' \description{This genelist is used to assign the related property using the assign.property function}
-#' \usage{data('MSL.property')}
-#' \format{ A dataframe 1105 observations on the following 2 variables:
-#' \describe{
-#'   \item{Gene.Symbol}{ID of transcript (HGNC where available)}
-#'   \item{Direction}{Direction of expression (up/down)}
+#' @description This genelist is used to assign the related property using the assign.property function
+#' @usage data('MSL.property')
+#' @format An object of class \code{data.frame} with 1105 rows and 2 columns.
+#' \itemize{
+#'   \item{Gene.Symbol: }{ID of transcript (HGNC where available)}
+#'   \item{Direction: }{Direction of expression (up/down)}
 #' }
-#' }
-#' \source Identified in related publication
-#' \examples{data('MSL.property')}
+#' @keywords List
+#' @source Identified in related publication
+#' @examples data('MSL.property')
+#' @return An object of class \code{data.frame} with 1105 rows and 2 columns.
 'MSL.property'

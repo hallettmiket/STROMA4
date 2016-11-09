@@ -3,25 +3,26 @@
 \docType{data}
 \name{E.stroma.property}
 \alias{E.stroma.property}
-\title{\name{E.stroma.property}
-\alias{E.stroma.property}
-\docType{data}
-\title {Genelist for E.stroma.property}}
-\format{An object of class \code{data.frame} with 27 rows and 2 columns.}
+\title{Genelist for E.stroma.property}
+\format{An object of class \code{data.frame} with 27 rows and 2 columns.
+\itemize{
+  \item{Gene.Symbol: }{ID of transcript (HGNC where available)}
+  \item{Direction: }{Direction of expression (up/down)}
+}}
+\source{
+Identified in related publication
+}
 \usage{
-E.stroma.property
+data('E.stroma.property')
+}
+\value{
+An object of class \code{data.frame} with 27 rows and 2 columns.
 }
 \description{
-\description{This genelist is used to assign the related property using the assign.property function}
-\usage{data('E.stroma.property')}
-\format{ A dataframe 27 observations on the following 2 variables:
-\describe{
-  \item{Gene.Symbol}{ID of transcript (HGNC where available)}
-  \item{Direction}{Direction of expression (up/down)}
+This genelist is used to assign the related property using the assign.property function
 }
+\examples{
+data('E.stroma.property')
 }
-\source Identified in related publication
-\examples{data('E.stroma.property')}
-}
-\keyword{datasets}
+\keyword{List}
 

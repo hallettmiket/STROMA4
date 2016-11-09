@@ -3,25 +3,26 @@
 \docType{data}
 \name{BL1.property}
 \alias{BL1.property}
-\title{\name{BL1.property}
-\alias{BL1.property}
-\docType{data}
-\title {Genelist for BL1.property}}
-\format{An object of class \code{data.frame} with 473 rows and 2 columns.}
+\title{Genelist for BL1.property}
+\format{An object of class \code{data.frame} with 473 rows and 2 columns.
+\itemize{
+  \item{Gene.Symbol: }{ID of transcript (HGNC where available)}
+  \item{Direction: }{Direction of expression (up/down)}
+}}
+\source{
+Identified in related publication
+}
 \usage{
-BL1.property
+data('BL1.property')
+}
+\value{
+An object of class \code{data.frame} with 473 rows and 2 columns.
 }
 \description{
-\description{This genelist is used to assign the related property using the assign.property function}
-\usage{data('BL1.property')}
-\format{ A dataframe 473 observations on the following 2 variables:
-\describe{
-  \item{Gene.Symbol}{ID of transcript (HGNC where available)}
-  \item{Direction}{Direction of expression (up/down)}
+This genelist is used to assign the related property using the assign.property function
 }
+\examples{
+data('BL1.property')
 }
-\source Identified in related publication
-\examples{data('BL1.property')}
-}
-\keyword{datasets}
+\keyword{List}
 
