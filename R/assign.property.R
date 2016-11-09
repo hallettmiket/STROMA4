@@ -42,19 +42,19 @@ assign.properties <- function(ESet, geneID.column=1, genelists=c('Stroma4', 'TNB
 
     ## Load property genelists and direction
     if('Stroma4' %in% genelists){
-        data("B.stroma.property", package='Stroma4', envir=temp.envir)
-        data("E.stroma.property", package='Stroma4', envir=temp.envir)
-        data("D.stroma.property", package='Stroma4', envir=temp.envir)
-        data("T.stroma.property", package='Stroma4', envir=temp.envir)
+        data("B.stroma.property", package='STROMA4', envir=temp.envir)
+        data("E.stroma.property", package='STROMA4', envir=temp.envir)
+        data("D.stroma.property", package='STROMA4', envir=temp.envir)
+        data("T.stroma.property", package='STROMA4', envir=temp.envir)
     }
 
     if('TNBCType' %in% genelists){
-        data("BL1.property", package='Stroma4', envir=temp.envir)
-        data("BL2.property", package='Stroma4', envir=temp.envir)
-        data("IM.property", package='Stroma4', envir=temp.envir)
-        data("LAR.property", package='Stroma4', envir=temp.envir)
-        data("M.property", package='Stroma4', envir=temp.envir)
-        data("MSL.property", package='Stroma4', envir=temp.envir)
+        data("BL1.property", package='STROMA4', envir=temp.envir)
+        data("BL2.property", package='STROMA4', envir=temp.envir)
+        data("IM.property", package='STROMA4', envir=temp.envir)
+        data("LAR.property", package='STROMA4', envir=temp.envir)
+        data("M.property", package='STROMA4', envir=temp.envir)
+        data("MSL.property", package='STROMA4', envir=temp.envir)
     }
 
     if(!('TNBCType' %in% genelists) & !('Stroma4' %in% genelists))

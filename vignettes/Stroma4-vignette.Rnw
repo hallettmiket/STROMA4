@@ -27,8 +27,8 @@ To apply the stromal properties, simply use pass an `ExpressionSet` to the funct
 First we will load the Stroma4 package.
 <<verbose=FALSE, results=hide>>=
 source("https://bioconductor.org/biocLite.R")
-#biocLite("Stroma4")
-library("Stroma4")
+#biocLite("STROMA4")
+library("STROMA4")
 @
 
 
