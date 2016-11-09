@@ -18,69 +18,75 @@
 #' data(mainz, package='breastCancerMAINZ')
 #' all.properties <- assign.properties(ESet=mainz, geneID.column='Gene.symbol',
 #'		genelists=c('Stroma4', 'TNBCType'), n=10, mc.cores=1)
-assign.properties <- function (ESet, geneID.column = 1, genelists = c("Stroma4", "TNBCType"), 
-    n = 1000, seed = 123456, mc.cores = 1, var.method = function(x) rowIQRs(x, 
-        na.rm = TRUE)) 
-{
-    cat("--Assigning properties to expression data--", "\n")
-    if (!class(ESet) == "ExpressionSet") 
-        stop("Error in assigning property: exprs is not of class \"ExpressionSet\"")
+assign.properties <- function(ESet, geneID.column=1, genelists=c('Stroma4', 'TNBCType'), n=1000,  seed=123456, mc.cores=1, var.method= function(x) rowIQRs(x, na.rm=TRUE)){
+    cat('--Assigning properties to expression data--', '\n')
+    if(!class(ESet) == 'ExpressionSet')
+        stop('Error in assigning property: exprs is not of class "ExpressionSet"')
+
     exprs <- exprs(ESet)
     genes <- fData(ESet)[, geneID.column]
-    if (any(duplicated(genes))) {
-        cat("--There are duplicated genes. Using most variable to collapse--", 
-            "\n")
+
+    if(any(duplicated(genes))){
+        cat('--There are duplicated genes. Using most variable to collapse--', '\n')
         cat()
-        var.estimate <- order(var.method(exprs), decreasing = TRUE)
+        var.estimate <- order(var.method(exprs), decreasing=TRUE)
         exprs <- exprs[var.estimate, ]
         genes <- genes[var.estimate]
+
         to.keep <- !duplicated(genes)
         genes <- genes[to.keep]
         exprs <- exprs[to.keep, ]
     }
+
     temp.envir <- new.env()
-    if ("Stroma4" %in% genelists) {
-        data("B.stroma.property", package = "STROMA4", envir = temp.envir)
-        data("E.stroma.property", package = "STROMA4", envir = temp.envir)
-        data("D.stroma.property", package = "STROMA4", envir = temp.envir)
-        data("T.stroma.property", package = "STROMA4", envir = temp.envir)
+
+    ## Load property genelists and direction
+    if('Stroma4' %in% genelists){
+        data("B.stroma.property", package='STROMA4', envir=temp.envir)
+        data("E.stroma.property", package='STROMA4', envir=temp.envir)
+        data("D.stroma.property", package='STROMA4', envir=temp.envir)
+        data("T.stroma.property", package='STROMA4', envir=temp.envir)
     }
-    if ("TNBCType" %in% genelists) {
-        data("BL1.property", package = "STROMA4", envir = temp.envir)
-        data("BL2.property", package = "STROMA4", envir = temp.envir)
-        data("IM.property", package = "STROMA4", envir = temp.envir)
-        data("LAR.property", package = "STROMA4", envir = temp.envir)
-        data("M.property", package = "STROMA4", envir = temp.envir)
-        data("MSL.property", package = "STROMA4", envir = temp.envir)
+
+    if('TNBCType' %in% genelists){
+        data("BL1.property", package='STROMA4', envir=temp.envir)
+        data("BL2.property", package='STROMA4', envir=temp.envir)
+        data("IM.property", package='STROMA4', envir=temp.envir)
+        data("LAR.property", package='STROMA4', envir=temp.envir)
+        data("M.property", package='STROMA4', envir=temp.envir)
+        data("MSL.property", package='STROMA4', envir=temp.envir)
     }
-    if (!("TNBCType" %in% genelists) & !("Stroma4" %in% genelists)) 
-        stop("Need to specify either Stroma4 or TNBCType as genelists")
+
+    if(!('TNBCType' %in% genelists) & !('Stroma4' %in% genelists))
+        stop('Need to specify either Stroma4 or TNBCType as genelists')
+
     ret <- list()
-    for (i in names(temp.envir)) {
+
+    ## Run BreSAT ROI
+    for(i in names(temp.envir)){
+        ## Find Matching genes between data and property genelist
         match.genes <- temp.envir[[i]]
-        match.genes <- match.genes[which(match.genes[, 1] %in% 
-            genes), , drop = FALSE]
-        if (nrow(match.genes) == 0) {
+        match.genes <- match.genes[which(match.genes[, 1] %in% genes), , drop=FALSE]
+
+        if(nrow(match.genes) == 0){
             ret[[i]] <- "Error: No matching genes in expression matrix"
-        }
-        else {
-            cat("----", nrow(match.genes), "out of", nrow(temp.envir[[i]]), 
-                "total genes matching for", i, "----", "\n")
-            up.genes <- which(genes %in% match.genes[which(match.genes[, 
-                2] == "up"), 1])
-            dn.genes <- which(genes %in% match.genes[which(match.genes[, 
-                2] == "down"), 1])
+        } else{
+            cat('----', nrow(match.genes), 'out of', nrow(temp.envir[[i]]), 'total genes matching for', i, '----', '\n')
+
+            up.genes <- which(genes %in% match.genes[which(match.genes[, 2] == 'up'), 1])
+            dn.genes <- which(genes %in% match.genes[which(match.genes[, 2] == 'down'), 1])
             match.exprs <- exprs[c(up.genes, dn.genes), ]
-            directions <- rep(c("up", "down"), c(length(up.genes), 
-                length(dn.genes)))
-            ranksum.object <- .sig.ranksum(exprdata = match.exprs, 
-                up = which(directions == "up"), dn = which(directions == 
-                  "down"), full.return = TRUE)
-            roi <- .random.ranks(ranksum.object, n = n, seed = seed, 
-                mc.cores = mc.cores)
+            directions <- rep(c('up', 'down'), c(length(up.genes), length(dn.genes)))
+
+            ranksum.object <- .sig.ranksum(exprdata=match.exprs, up=which(directions == 'up'), dn=which(directions == 'down'), full.return=TRUE)
+
+            roi <- .random.ranks(ranksum.object, n=n, seed=seed, mc.cores=mc.cores)
+
             ret[[i]] <- .define.roi.regions(ranksum.object, roi)
         }
     }
+
     rm(temp.envir)
+
     return(ret)
 }
