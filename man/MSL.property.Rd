@@ -5,9 +5,9 @@
 \alias{MSL.property}
 \title{Genelist for MSL.property}
 \format{A dataframe with 2 columns, and 1105 rows
- describe{
-   item Gene.Symbol ID of transcript (HGNC where available)
-   item Direction Direction of expression (up/down)
+\describe{
+  \item{Gene.Symbol}{ID of transcript (HGNC where available)}
+  \item{Direction}{Direction of expression (up/down)}
 }}
 \source{
 Identified in related publication

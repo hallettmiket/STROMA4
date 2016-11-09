@@ -5,9 +5,9 @@
 \alias{B.stroma.property}
 \title{Genelist for B.stroma.property}
 \format{A dataframe with 2 columns, and 567 rows
- describe{
-   item Gene.Symbol ID of transcript (HGNC where available)
-   item Direction Direction of expression (up/down)
+\describe{
+  \item{Gene.Symbol}{ID of transcript (HGNC where available)}
+  \item{Direction}{Direction of expression (up/down)}
 }}
 \source{
 Identified in related publication
