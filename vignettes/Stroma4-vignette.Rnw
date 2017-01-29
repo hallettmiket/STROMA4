@@ -51,7 +51,7 @@ data(mainz, package='breastCancerMAINZ')
 
 Note that this package has HGNC ID annotations in the featureData in the 'Gene.symbol' column.
 <<verbose=FALSE>>=
-head(fData(mainz)[, "Gene.symbol", drop=F])
+head(fData(mainz)[, "Gene.symbol", drop=FALSE])
 @
 
 We can therefore pass this column to the function. If we did not have these annotations, we would be required to first obtain these annotations (e.g. from AnnotationDbi) and make sure that these annotations were added to the featureData of the expressionset.
