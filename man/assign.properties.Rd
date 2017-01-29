@@ -27,7 +27,10 @@ assign.properties(ESet, geneID.column = 1, genelists = c("Stroma4",
 The function returns a list of assignments for each property. Assignments are from 1-3, with 1 being low, 2 being intermediate, and 3 being high assignment respectively.
 }
 \description{
-This is a function to assign stromal property and TNBCType generative property levels to a TNBC dataset
+\code{assign.properties} is a function to assign stromal property and Lehmann generative property levels to a TNBC dataset. Given an expressionset with a gene expression matrix, and a a list of HGNC IDs, this function will estimate the status of samples for either the Lehmann generative properties, the stromal properties, or both at the same time. (Saleh et al. , under review at Cancer Research)
+}
+\details{
+We defined a method for estimating stromal and Lehmann generative properties in a gene expression dataset (either LCM stroma or whole tumor breast cancer data). The \code{assign.properties} function extracts the expression data from the expression set using the exprs() function. The HGNC ID annotations for the dataset are required as this is what the function uses to identify genes to estimate property levels. The HGNC IDs should be in the featureData of the expressionset, and the corresponding column ID should be passed to the geneID.column argument.  The function can be used to estimate the stromal properties, the  Lehmann generative properties or both simultaneously depending on whether 'STROMA4' (stromal properties), 'TNBCTYPE' (Lehmann generative properties), or both are passed to the genelists argument. This function will then return property assignments.
 }
 \examples{
 library(breastCancerMAINZ)
