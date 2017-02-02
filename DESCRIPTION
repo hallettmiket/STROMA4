@@ -7,7 +7,7 @@ Authors@R: c(person("Sadiq", "Saleh", email = "sadiq.mehdiismailsaleh@mail.mcgil
             person("Michael", "Hallett", email = "michael.t.hallett@mcgill.ca ", role = "aut"))
 Maintainer: Sadiq Saleh <sadiq.mehdiismailsaleh@mail.mcgill.ca>
 Description: Assigns the TNBC stromal properties and TNBCType generative properties to gene expression datasets.
-Depends: R (>= 3.3), Biobase, parallel, cluster, matrixStats, stats, graphics, utils
+Depends: R (>= 3.4), Biobase, parallel, cluster, matrixStats, stats, graphics, utils
 License: GPL
 LazyData: true
 RoxygenNote: 5.0.1
