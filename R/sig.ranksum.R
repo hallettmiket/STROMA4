@@ -1,5 +1,5 @@
 #' Function to assign ranksums to an expression matrix
-#' 
+#'
 #' This is a function to assign ranksums to a dataset
 #' @param exprdata An expression matrix. Rows correspont to genes, columns to samples. Genes with multiple probes should be collapsed to a single row e.g. using most variable probe.
 #' @param up A vector specifying rows of genes in the up direction.
@@ -10,19 +10,19 @@
 #' @importFrom matrixStats rowSds
 #' @importFrom stats cor
 #' @importFrom matrixStats rowSds
-.sig.ranksum <- function (exprdata, up = NULL, dn = NULL, ns = NULL, full.return = FALSE) 
+.sig.ranksum <- function (exprdata, up = NULL, dn = NULL, ns = NULL, full.return = FALSE)
 {
-    if (length(dim(exprdata)) != 2) 
+    if (length(dim(exprdata)) != 2)
         stop("'exprdata' must be a matrix")
-    if (length(up) == 0 && length(dn) == 0 && length(ns) == 0) 
+    if (length(up) == 0 && length(dn) == 0 && length(ns) == 0)
         stop("no indices were specified")
-    if (length(ns) > 0 && (length(up) > 0 || length(dn) > 0)) 
+    if (length(ns) > 0 && (length(up) > 0 || length(dn) > 0))
         stop("both directional and non-directional indices were specified")
-    if (is.logical(up)) 
+    if (is.logical(up))
         up <- which(up)
-    if (is.logical(dn)) 
+    if (is.logical(dn))
         dn <- which(dn)
-    if (is.logical(ns)) 
+    if (is.logical(ns))
         ns <- which(ns)
     if (ncol(exprdata) < 2) {
         if (isTRUE(full.return)) {
@@ -48,7 +48,7 @@
             up <- ns
         }
         else if (length(ns) == 2) {
-            if (cor(exprdata[ns[1], ], exprdata[ns[2], ], use = "pairwise") < 
+            if (cor(exprdata[ns[1], ], exprdata[ns[2], ], use = "pairwise") <
                 0) {
                 up <- ns[1]
                 dn <- ns[2]
@@ -58,7 +58,7 @@
             }
         }
         else if (length(ns) > 2) {
-            diss <- 1 - cor(t(exprdata[ns, , drop = FALSE]), 
+            diss <- 1 - cor(t(exprdata[ns, , drop = FALSE]),
                 use = "pairwise")
             diss[which(is.na(diss))] <- 1
             diss[diss >= 1] <- diss[diss >= 1] + 1
@@ -66,9 +66,9 @@
             up.cluster <- which.max(table(clustering))
             up <- ns[which(clustering == up.cluster)]
             dn <- ns[which(clustering != up.cluster)]
-            up.dn.cor <- cor(t(exprdata[up, , drop = FALSE]), 
+            up.dn.cor <- cor(t(exprdata[up, , drop = FALSE]),
                 t(exprdata[dn, , drop = FALSE]), use = "pairwise")
-            if (sum(up.dn.cor < 0, na.rm = TRUE) < length(up) * 
+            if (sum(up.dn.cor < 0, na.rm = TRUE) < length(up) *
                 length(dn)/2) {
                 up <- ns
                 dn <- NULL
@@ -90,7 +90,7 @@
     }
     if (length(dn) != 0) {
         dat <- exprdata[dn, , drop = FALSE]
-        ranksum <- ranksum + rowSums(ncol(exprdata) - apply(dat, 
+        ranksum <- ranksum + rowSums(ncol(exprdata) - apply(dat,
             1, function(x) {
                 rank(x, "average", na.last = "keep")
             }) + 1, na.rm = TRUE)
@@ -98,17 +98,17 @@
     }
     ranksum <- ranksum/col.counts
     rank <- rank(ranksum, "average", na.last = TRUE)
-    if (full.return == FALSE) 
+    if (full.return == FALSE)
         return(rank)
-    if (length(up) == 0) 
+    if (length(up) == 0)
         up <- NULL
-    if (length(dn) == 0) 
+    if (length(dn) == 0)
         dn <- NULL
     gene.cor <- function(gene.idx, is.up, exprdata, pat.order) {
         gene.expr <- exprdata[gene.idx, pat.order]
         if (is.up == TRUE) 
             gene.expr <- -gene.expr
-        cor(gene.expr, 1:ncol(exprdata), method = "spearman", 
+        cor(gene.expr, seq_len(ncol(exprdata)), method = "spearman",
             use = "pairwise")
     }
     ret <- list()

@@ -3,7 +3,7 @@
 export(assign.properties)
 import(Biobase)
 import(cluster)
-import(parallel)
+import(BiocParallel)
 importFrom(graphics,hist)
 importFrom(matrixStats,rowIQRs)
 importFrom(matrixStats,rowSds)
